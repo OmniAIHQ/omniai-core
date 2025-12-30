@@ -65,6 +65,12 @@ console.log('Metadata:', result.metadata);
 | **OpenAI** | `openai` | Text, Image | [Read Docs](./src/providers/openai/README.md) |
 | **Gemini** | `gemini` | Text | Coming Soon |
 
+## Contributing
+
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes.
+
+Check out our [Changelog](CHANGELOG.md) to see what has changed recently.
+
 ## License
 
 Apache License, Version 2.0
