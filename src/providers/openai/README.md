@@ -1,6 +1,6 @@
 # OpenAI Provider
 
-This provider implements the `TextProvider` interface for OpenAI's `chat/completions` API.
+This provider implements the unified AI interface for OpenAI, exposing capabilities through namespaced APIs for text and image generation.
 
 ## Configuration
 
@@ -12,35 +12,75 @@ import { OmniAIProvider } from '@omniaihq/core';
 const openai = OmniAIProvider.openAI('sk-your-api-key');
 ```
 
-## Supported Capabilities
+## Usage
 
-- **Text Generation**: Yes (`generateText`)
-- **Streaming**: Not yet
-- **Images**: Not yet (Planned)
-- **Audio**: No
+### Text Generation
 
-## Model Support
-
-You can pass any chat model name supported by OpenAI:
-- `gpt-4` (default)
-- `gpt-4-turbo`
-- `gpt-3.5-turbo`
+Use the `text` namespace for text operations.
 
 ```typescript
-const result = await openai.generateText('Hello', {
-  model: 'gpt-3.5-turbo'
+const result = await openai.text.generateText({
+  input: 'Hello, world!',
+  model: 'gpt-4',
+  temperature: 0.7
+});
+
+console.log(result.text);
+```
+
+### Image Generation
+
+Use the `image` namespace for image operations.
+
+```typescript
+const result = await openai.image.generateImage({
+  prompt: 'A futuristic city',
+  model: 'dall-e-3',
+  size: '1024x1024'
+});
+
+console.log(result.images[0].url);
+```
+
+### Image Variation
+
+Generate variations of an existing image (requires `dall-e-2`).
+
+```typescript
+// Assuming you have a File object (e.g., from an input)
+const file = new File(['...'], 'image.png', { type: 'image/png' });
+
+const result = await openai.image.generateImageVariation({
+  image: file,
+  n: 2,
+  size: '1024x1024'
 });
 ```
 
+## Supported Capabilities
+
+| Capability | Status | Method |
+| --- | --- | --- |
+| **Text Generation** | ✅ | `openai.text.generateText` |
+| **Image Generation** | ✅ | `openai.image.generateImage` |
+| **Image Variation** | ✅ | `openai.image.generateImageVariation` |
+| **Streaming** | ❌ | Not yet |
+| **Audio** | ❌ | No |
+
+## Model Support
+
+You can pass any model supported by OpenAI. Common defaults:
+- **Text**: `gpt-4`, `gpt-4-turbo`, `gpt-3.5-turbo`
+- **Image**: `dall-e-2`, `dall-e-3`
+
 ## Options Mapping
 
-Standard options are mapped to OpenAI API parameters as follows:
+Generic options are mapped to OpenAI's API parameters:
 
-| generic option | OpenAI Parameter |
+| Generic Option | OpenAI Parameter |
 | --- | --- |
+| `input` | `messages` (mapped to user role) |
 | `temperature` | `temperature` |
 | `maxTokens` | `max_tokens` |
 | `topP` | `top_p` |
 | `stopSequences` | `stop` |
-
-Any extra parameters passed in the `options` object will strictly be ignored unless we add specific support for them in the `ProviderConfig`.
