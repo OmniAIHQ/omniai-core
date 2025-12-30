@@ -63,6 +63,7 @@ console.log('Metadata:', result.metadata);
 | Provider | Key | Features | Docs |
 | --- | --- | --- | --- |
 | **OpenAI** | `openai` | Text | [Read Docs](./src/providers/openai/README.md) |
+| **Gemini** | `gemini` | Text | Coming Soon |
 
 ## License
 
