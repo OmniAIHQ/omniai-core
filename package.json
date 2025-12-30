@@ -1,6 +1,6 @@
 {
   "name": "@omniaihq/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "access": "public",
   "description": "Provider-agnostic AI SDK foundation for OmniAI",
   "type": "module",
