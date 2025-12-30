@@ -164,7 +164,7 @@ export class OpenAIProvider implements BaseProvider {
     // Append extra keys if needed (excluding typed ones handled above)
     Object.entries(options).forEach(([key, value]) => {
       if (value !== undefined) {
-        if (value instanceof Blob || value instanceof File) {
+        if (value instanceof Blob || value instanceof Buffer) {
           body.append(key, value);
         } else {
           body.append(key, String(value));

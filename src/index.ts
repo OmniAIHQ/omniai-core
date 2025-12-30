@@ -1,28 +1,28 @@
 // Types
-export * from './types/capabilities.js';
-export * from './types/common.js';
-export * from './types/image.js';
-export * from './types/provider.js';
-export * from './types/text.js';
+export * from './types/capabilities';
+export * from './types/common';
+export * from './types/image';
+export * from './types/provider';
+export * from './types/text';
 
 // Interfaces
-export * from './interfaces/BaseProvider.js';
-export * from './interfaces/ImageProvider.js';
-export * from './interfaces/TextProvider.js';
+export * from './interfaces/BaseProvider';
+export * from './interfaces/ImageProvider';
+export * from './interfaces/TextProvider';
 
 // Errors
-export * from './errors/CapabilityError.js';
-export * from './errors/OmniAIError.js';
-export * from './errors/ProviderNotSupportedError.js';
+export * from './errors/CapabilityError';
+export * from './errors/OmniAIError';
+export * from './errors/ProviderNotSupportedError';
 
 // Factory
-export * from './factory/OmniAIProvider.js';
+export * from './factory/OmniAIProvider';
 
 // Providers
-export * from './providers/openai/OpenAIProvider.js';
+export * from './providers/openai/OpenAIProvider';
 
 // Infrastructure
-export * from './infrastructure/HttpClient.js';
+export * from './infrastructure/HttpClient';
 
 // Utils
-export * from './utils/assert.js';
+export * from './utils/assert';

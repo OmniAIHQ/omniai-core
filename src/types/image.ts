@@ -23,11 +23,11 @@ export interface GeneratedImage {
 }
 
 export interface ImageVariationOptions {
-  image: Blob | File;
+  image: Blob | Buffer;
   /**
    * Additional provider-specific parameters.
    */
-  [key: string]: JSONValue | Blob | File | undefined;
+  [key: string]: JSONValue | Blob | Buffer | undefined;
 }
 
 export interface ImageGenerationResult {

@@ -109,7 +109,7 @@ export class HttpClient {
           ...defaultHeaders,
           ...headers,
         },
-        body: isFormData ? (body as BodyInit) : JSON.stringify(body),
+        body: isFormData ? (body as any) : JSON.stringify(body),
       });
 
       if (!response.ok) {

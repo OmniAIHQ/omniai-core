@@ -12,12 +12,16 @@
       "import": "./dist/index.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "prepublishOnly": "yarn build"
   },
   "keywords": [
     "ai",
