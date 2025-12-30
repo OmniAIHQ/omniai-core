@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.0] - 2025-12-30
+## [0.1.1] - 2025-12-30
 
 ### Changed
 - **BREAKING**: Refactored API to use namespaces (`openai.text`, `openai.image`) instead of flat methods.
