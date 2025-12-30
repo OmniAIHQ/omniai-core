@@ -62,15 +62,15 @@ export class OpenAIProvider implements BaseProvider {
     this.httpClient = new HttpClient();
 
     this.text = {
-      generateText: (options) => this.generateTextInternal(options),
-      retrieveSingleResponse: (responseId, queryParams) => this.retrieveResponse(responseId, queryParams),
-      deleteSingleResponse: (responseId) => this.deleteResponse(responseId),
-      cancelSingleResponse: (responseId) => this.cancelResponse(responseId),
+      generateText: (options): Promise<TextGenerationResult> => this.generateTextInternal(options),
+      retrieveSingleResponse: (responseId, queryParams): Promise<any> => this.retrieveResponse(responseId, queryParams),
+      deleteSingleResponse: (responseId): Promise<any> => this.deleteResponse(responseId),
+      cancelSingleResponse: (responseId): Promise<any> => this.cancelResponse(responseId),
     };
 
     this.image = {
-      generateImage: (options) => this.generateImageInternal(options),
-      generateImageVariation: (options) => this.generateImageVariationInternal(options),
+      generateImage: (options): Promise<ImageGenerationResult> => this.generateImageInternal(options),
+      generateImageVariation: (options): Promise<ImageGenerationResult> => this.generateImageVariationInternal(options),
     };
   }
 
