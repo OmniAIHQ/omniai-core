@@ -20,8 +20,8 @@ export interface TextProvider {
    */
   retrieveSingleResponse(
     responseId: string,
-    queryParams?: Record<string, any>
-  ): Promise<any>;
+    queryParams?: Record<string, unknown>
+  ): Promise<unknown>;
 
   /**
    * Delete a response by its ID.
@@ -29,7 +29,7 @@ export interface TextProvider {
    */
   deleteSingleResponse?(
     responseId: string
-  ): Promise<any>;
+  ): Promise<unknown>;
 
   /**
    * Cancel a running response generation.
@@ -37,5 +37,5 @@ export interface TextProvider {
    */
   cancelSingleResponse?(
     responseId: string
-  ): Promise<any>;
+  ): Promise<unknown>;
 }

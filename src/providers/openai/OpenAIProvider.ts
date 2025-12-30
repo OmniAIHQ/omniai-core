@@ -20,7 +20,7 @@ interface OpenAICompletionResponse {
     content: {
       type: string;
       text: string;
-      annotations: any;
+      annotations: unknown;
     }[]
   }>;
   usage?: {
@@ -63,9 +63,9 @@ export class OpenAIProvider implements BaseProvider {
 
     this.text = {
       generateText: (options): Promise<TextGenerationResult> => this.generateTextInternal(options),
-      retrieveSingleResponse: (responseId, queryParams): Promise<any> => this.retrieveResponse(responseId, queryParams),
-      deleteSingleResponse: (responseId): Promise<any> => this.deleteResponse(responseId),
-      cancelSingleResponse: (responseId): Promise<any> => this.cancelResponse(responseId),
+      retrieveSingleResponse: (responseId, queryParams): Promise<unknown> => this.retrieveResponse(responseId, queryParams),
+      deleteSingleResponse: (responseId): Promise<unknown> => this.deleteResponse(responseId),
+      cancelSingleResponse: (responseId): Promise<unknown> => this.cancelResponse(responseId),
     };
 
     this.image = {
@@ -201,8 +201,8 @@ export class OpenAIProvider implements BaseProvider {
    */
   private async retrieveResponse(
     responseId: string,
-    queryParams?: Record<string, any>
-  ): Promise<any> {
+    queryParams?: Record<string, unknown>
+  ): Promise<unknown> {
     const endpoint = `${this.baseUrl}/responses/${responseId}`;
 
     const startTime = Date.now();
@@ -226,7 +226,7 @@ export class OpenAIProvider implements BaseProvider {
 
   private async deleteResponse(
     responseId: string
-  ): Promise<any> {
+  ): Promise<unknown> {
     const endpoint = `${this.baseUrl}/responses/${responseId}`;
     return this.httpClient.delete(endpoint, {
       Authorization: `Bearer ${this.apiKey}`,
@@ -235,7 +235,7 @@ export class OpenAIProvider implements BaseProvider {
 
   private async cancelResponse(
     responseId: string
-  ): Promise<any> {
+  ): Promise<unknown> {
     const endpoint = `${this.baseUrl}/responses/${responseId}/cancel`;
     // Empty body for cancel
     return this.httpClient.post(endpoint, {}, {
