@@ -8,6 +8,141 @@ export class HttpClient {
    * @param headers Optional headers.
    * @returns The parsed JSON response.
    */
+  async get<T>(
+    url: string,
+    params: Record<string, string | number | boolean | undefined> = {},
+    headers: Record<string, string> = {}
+  ): Promise<T> {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) {
+        query.append(key, String(value));
+      }
+    });
+
+    const queryString = query.toString();
+    const fullUrl = queryString ? `${url}?${queryString}` : url;
+
+    try {
+      const response = await fetch(fullUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers,
+        },
+      });
+
+      if (!response.ok) {
+        let errorDetails: unknown;
+        try {
+          errorDetails = await response.json();
+        } catch {
+          errorDetails = await response.text();
+        }
+
+        let errorMessage = `HTTP Request Failed: ${response.status} ${response.statusText}`;
+
+        if (
+          typeof errorDetails === 'object' &&
+          errorDetails !== null &&
+          'error' in errorDetails
+        ) {
+          const providerError = (errorDetails as any).error;
+          if (typeof providerError === 'object' && providerError?.message) {
+            errorMessage = providerError.message;
+          } else if (typeof providerError === 'string') {
+            errorMessage = providerError;
+          }
+        } else if (
+          typeof errorDetails === 'object' &&
+          errorDetails !== null &&
+          'message' in (errorDetails as any)
+        ) {
+          errorMessage = (errorDetails as any).message;
+        }
+
+        throw new OmniAIError(errorMessage, 'HTTP_ERROR', {
+          status: response.status,
+          statusText: response.statusText,
+          details: errorDetails,
+        });
+      }
+
+      return (await response.json()) as T;
+    } catch (error) {
+      if (error instanceof OmniAIError) {
+        throw error;
+      }
+      throw new OmniAIError(
+        `Network Error: ${(error as Error).message}`,
+        'NETWORK_ERROR',
+        error
+      );
+    }
+  }
+
+  async delete<T>(
+    url: string,
+    headers: Record<string, string> = {}
+  ): Promise<T> {
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers,
+        },
+      });
+
+      if (!response.ok) {
+        let errorDetails: unknown;
+        try {
+          errorDetails = await response.json();
+        } catch {
+          errorDetails = await response.text();
+        }
+
+        let errorMessage = `HTTP Request Failed: ${response.status} ${response.statusText}`;
+
+        if (
+          typeof errorDetails === 'object' &&
+          errorDetails !== null &&
+          'error' in errorDetails
+        ) {
+          const providerError = (errorDetails as any).error;
+          if (typeof providerError === 'object' && providerError?.message) {
+            errorMessage = providerError.message;
+          } else if (typeof providerError === 'string') {
+            errorMessage = providerError;
+          }
+        } else if (
+          typeof errorDetails === 'object' &&
+          errorDetails !== null &&
+          'message' in (errorDetails as any)
+        ) {
+          errorMessage = (errorDetails as any).message;
+        }
+
+        throw new OmniAIError(errorMessage, 'HTTP_ERROR', {
+          status: response.status,
+          statusText: response.statusText,
+          details: errorDetails,
+        });
+      }
+
+      return (await response.json()) as T;
+    } catch (error) {
+      if (error instanceof OmniAIError) {
+        throw error;
+      }
+      throw new OmniAIError(
+        `Network Error: ${(error as Error).message}`,
+        'NETWORK_ERROR',
+        error
+      );
+    }
+  }
+
   async post<T>(
     url: string,
     body: unknown,

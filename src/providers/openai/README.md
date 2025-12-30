@@ -57,6 +57,21 @@ const result = await openai.image.generateImageVariation({
 });
 ```
 
+### Response Management
+
+You can manage individual responses using the `text` namespace.
+
+```typescript
+// Retrieve a single response
+const resp = await openai.text.retrieveSingleResponse('resp_123');
+
+// Delete a single response
+await openai.text.deleteSingleResponse('resp_123');
+
+// Cancel a single running response
+await openai.text.cancelSingleResponse('resp_123');
+```
+
 ## Supported Capabilities
 
 | Capability | Status | Method |
@@ -64,6 +79,9 @@ const result = await openai.image.generateImageVariation({
 | **Text Generation** | ✅ | `openai.text.generateText` |
 | **Image Generation** | ✅ | `openai.image.generateImage` |
 | **Image Variation** | ✅ | `openai.image.generateImageVariation` |
+| **Response Single Retrieval** | ✅ | `openai.text.retrieveSingleResponse` |
+| **Response Single Delete** | ✅ | `openai.text.deleteSingleResponse` |
+| **Response Single Cancel** | ✅ | `openai.text.cancelSingleResponse` |
 | **Streaming** | ❌ | Not yet |
 | **Audio** | ❌ | No |
 

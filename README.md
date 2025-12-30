@@ -45,14 +45,11 @@ const openai = OmniAIProvider.openAI(process.env.OPENAI_API_KEY!);
 
 ```typescript
 // Define your standard generation options
-const options = {
+const result = await openai.text.generateText({
+  input: 'Hello, world!',
   model: 'gpt-4',
-  temperature: 0.7,
-  maxTokens: 100,
-};
-
-// Generate text
-const result = await openai.generateText('Tell me a joke about unicorns.', options);
+  temperature: 0.7
+});
 
 console.log(result.text);
 // Output: "Why did the unicorn..."

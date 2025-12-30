@@ -63,6 +63,9 @@ export class OpenAIProvider implements BaseProvider {
 
     this.text = {
       generateText: (options) => this.generateTextInternal(options),
+      retrieveSingleResponse: (responseId, queryParams) => this.retrieveResponse(responseId, queryParams),
+      deleteSingleResponse: (responseId) => this.deleteResponse(responseId),
+      cancelSingleResponse: (responseId) => this.cancelResponse(responseId),
     };
 
     this.image = {
@@ -190,5 +193,53 @@ export class OpenAIProvider implements BaseProvider {
         providerResponse: response,
       },
     };
+  }
+  /**
+   * Retrieve a previous response by ID.
+   * @param responseId The ID of the response to retrieve (e.g., resp_123).
+   * @param queryParams Optional query parameters.
+   */
+  private async retrieveResponse(
+    responseId: string,
+    queryParams?: Record<string, any>
+  ): Promise<any> {
+    const endpoint = `${this.baseUrl}/responses/${responseId}`;
+
+    const startTime = Date.now();
+    const response = await this.httpClient.get<OpenAICompletionResponse>(
+      endpoint,
+      queryParams,
+      {
+        Authorization: `Bearer ${this.apiKey}`,
+      }
+    );
+    const endTime = Date.now();
+
+    return {
+      ...response,
+      metadata: {
+        latencyMs: endTime - startTime,
+        providerResponse: response,
+      },
+    };
+  }
+
+  private async deleteResponse(
+    responseId: string
+  ): Promise<any> {
+    const endpoint = `${this.baseUrl}/responses/${responseId}`;
+    return this.httpClient.delete(endpoint, {
+      Authorization: `Bearer ${this.apiKey}`,
+    });
+  }
+
+  private async cancelResponse(
+    responseId: string
+  ): Promise<any> {
+    const endpoint = `${this.baseUrl}/responses/${responseId}/cancel`;
+    // Empty body for cancel
+    return this.httpClient.post(endpoint, {}, {
+      Authorization: `Bearer ${this.apiKey}`,
+    });
   }
 }
